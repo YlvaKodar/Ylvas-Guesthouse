@@ -16,7 +16,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDto roomToDto(Room r) {
-        return RoomDto.builder().roomNumber(r.getRoomNumber()).build();
+        return RoomDto.builder().id(r.getId()).roomNumber(r.getRoomNumber()).build();
     }
 
     @Override
