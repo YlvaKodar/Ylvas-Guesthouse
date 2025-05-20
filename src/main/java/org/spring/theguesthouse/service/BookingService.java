@@ -17,15 +17,15 @@ public interface BookingService {
 
     // Get operations
     List<DetailedBookingDTO> getAllBookings();
-    DetailedBookingDTO getBookingById(Long id);
-    List<DetailedBookingDTO> getBookingsByCustomerId(Long customerId);
-    List<DetailedBookingDTO> getBookingsByRoomId(Long roomId);
+    // DetailedBookingDTO getBookingById(Long id);
+    // List<DetailedBookingDTO> getBookingsByCustomerId(Long customerId);
+    // List<DetailedBookingDTO> getBookingsByRoomId(Long roomId);
 
     // CRUD operations
-    BookingDTO createBooking(BookingDTO bookingDTO);
-    BookingDTO updateBooking(Long id, BookingDTO bookingDTO);
-    void deleteBooking(Long id);
+    // BookingDTO createBooking(BookingDTO bookingDTO);
+    // BookingDTO updateBooking(Long id, BookingDTO bookingDTO);
+    // void deleteBooking(Long id);
 
     // Business logic
-    boolean isRoomAvailable(Long roomId, LocalDate checkInDate, LocalDate checkOutDate, Long excludeBookingId);
+    // boolean isRoomAvailable(Long roomId, LocalDate checkInDate, LocalDate checkOutDate, Long excludeBookingId);
 }
