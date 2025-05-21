@@ -16,7 +16,8 @@ public interface BookingService {
 
 
     // Get operations
-    List<DetailedBookingDTO> getAllBookings();
+    List<BookingDTO> getAllBookingDtos();
+    List<DetailedBookingDTO> getAllDetailedBookingDtos();
     // DetailedBookingDTO getBookingById(Long id);
     // List<DetailedBookingDTO> getBookingsByCustomerId(Long customerId);
     // List<DetailedBookingDTO> getBookingsByRoomId(Long roomId);
