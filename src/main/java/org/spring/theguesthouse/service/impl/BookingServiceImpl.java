@@ -1,6 +1,8 @@
 package org.spring.theguesthouse.service.impl;
 
-
+import org.spring.theguesthouse.entity.Booking;
+import org.spring.theguesthouse.entity.Customer;
+import org.spring.theguesthouse.entity.Room;
 import org.spring.theguesthouse.dto.BookingDTO;
 import org.spring.theguesthouse.dto.DetailedBookingDTO;
 import org.spring.theguesthouse.entity.Booking;
