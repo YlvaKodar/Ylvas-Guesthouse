@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookingDTO {
+public class DetailedBookingDTO {
     private Long id;
     private Date startingDate;
     private Date endingDate;
