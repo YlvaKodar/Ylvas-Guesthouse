@@ -19,8 +19,8 @@ public class Booking {
     @GeneratedValue
     private Long id;
 
-    private Date startingDate;
-    private Date endingDate;
+    private Date start_date;
+    private Date end_date;
 
     @ManyToOne
     @JoinColumn

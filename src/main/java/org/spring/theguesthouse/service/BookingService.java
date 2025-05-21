@@ -14,6 +14,7 @@ public interface BookingService {
     // Convert DTOs to entities
     Booking bookingDtoToBooking(DetailedBookingDTO dto);
 
+
     // Get operations
     List<DetailedBookingDTO> getAllBookings();
     // DetailedBookingDTO getBookingById(Long id);

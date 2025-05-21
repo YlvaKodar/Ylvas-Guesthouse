@@ -17,6 +17,6 @@ public class DetailedBookingDTO {
     private Long id;
     private Date startingDate;
     private Date endingDate;
-    private Long customerId;
-    private List<Long> roomIds;
+    private CustomerDto customer;
+    private List<RoomDto> rooms;
 }
