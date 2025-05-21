@@ -1,5 +1,6 @@
 package org.spring.theguesthouse.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.spring.theguesthouse.entity.Booking;
 import org.spring.theguesthouse.entity.Customer;
 import org.spring.theguesthouse.entity.Room;
@@ -9,32 +10,38 @@ import org.spring.theguesthouse.entity.Booking;
 import org.spring.theguesthouse.repository.BookingRepo;
 import org.spring.theguesthouse.repository.CustomerRepo;
 import org.spring.theguesthouse.repository.RoomRepo;
+import org.spring.theguesthouse.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BookingServiceImpl {
+@RequiredArgsConstructor
+public class BookingServiceImpl implements BookingService {
 
-    @Autowired
-    private BookingRepo bookingRepo;
+    private final BookingRepo bookingRepo;
+    private final CustomerRepo customerRepo;
+    private final RoomRepo roomRepo;
 
-    @Autowired
-    private CustomerRepo customerRepo;
-
-    @Autowired
-    private RoomRepo roomRepo;
 
     @Override
-    public BookingDTO bookingDTO(Booking booking) {}
+    public BookingDTO bookingToDto(Booking booking) {
+        return null;
+    }
 
     @Override
-    public DetailedBookingDTO bookingToDetailedDto(Booking booking) {}
+    public DetailedBookingDTO bookingToDetailedDto(Booking booking) {
+        return null;
+    }
 
     @Override
-    public Booking bookingDtoToBooking(BookingDTO dto) {}
+    public Booking bookingDtoToBooking(DetailedBookingDTO dto) {
+        return null;
+    }
 
     @Override
-    public List<DetailedBookingDTO> getAllBookings() {}
+    public List<DetailedBookingDTO> getAllBookings() {
+        return List.of();
+    }
 }

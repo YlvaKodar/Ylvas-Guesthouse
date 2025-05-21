@@ -1,5 +1,6 @@
 package org.spring.theguesthouse.service;
 
+import org.spring.theguesthouse.dto.BookingDTO;
 import org.spring.theguesthouse.entity.Booking;
 import org.spring.theguesthouse.dto.DetailedBookingDTO;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface BookingService {
     // Convert entities to DTOs
-    DetailedBookingDTO bookingToDto(Booking booking);
+    BookingDTO bookingToDto(Booking booking);
     DetailedBookingDTO bookingToDetailedDto(Booking booking);
 
     // Convert DTOs to entities
