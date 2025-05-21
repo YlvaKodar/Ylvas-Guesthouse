@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 
 public class DetailedCustomerDto {
 
-    private Long Id;
+    private Long id;
     private String name;
-    private String phoneNumber;
+    private String tel;
 
 }
