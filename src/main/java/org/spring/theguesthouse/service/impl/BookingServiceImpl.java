@@ -62,7 +62,10 @@ public class BookingServiceImpl implements BookingService {
 
         return DetailedBookingDTO.builder().id(booking.getId())
                 .start_date(booking.getStart_date()).end_date(booking.getEnd_date())
-                .rooms(tempRooms)
+                .rooms(booking.getRooms().forEach(room -> {
+                    roomService.roomToDto(room);
+                });
+                )
                 //TODO: När customerService har ovanstående metoder, kommentera in nedan.
                 //.customer(tempRooms)
                 .build();
