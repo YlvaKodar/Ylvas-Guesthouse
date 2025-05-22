@@ -1,6 +1,7 @@
 package org.spring.theguesthouse.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.theguesthouse.dto.CustomerDto;
 import org.spring.theguesthouse.dto.RoomDto;
 import org.spring.theguesthouse.entity.Booking;
 import org.spring.theguesthouse.entity.Customer;
