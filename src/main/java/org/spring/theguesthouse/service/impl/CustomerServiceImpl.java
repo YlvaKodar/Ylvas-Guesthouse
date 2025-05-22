@@ -21,6 +21,16 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Customer getAllCustomers(CustomerDto customerDto) {
+        return Customer.builder().id(customerDto.getId()).name(customerDto.getName()).build();
+    }
+
+    @Override
+    public Customer getCustomerById(Long id) {
+        return customerRepo.findById(id).orElse(null);
+    }
+
+    @Override
     public String addCustomer(DetailedCustomerDto customer) {
         customerRepo.save(detailedCustomerDtoToCustomer(customer));
         return "Customer was successfully added";
