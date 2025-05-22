@@ -15,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class DetailedBookingDTO {
     private Long id;
-    private Date start_date;
-    private Date end_date;
+    private Date startDate;
+    private Date endDate;
     private CustomerDto customer;
     private List<RoomDto> rooms;
 }

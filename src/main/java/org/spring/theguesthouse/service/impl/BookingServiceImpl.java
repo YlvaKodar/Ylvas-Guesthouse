@@ -13,7 +13,6 @@ import org.spring.theguesthouse.repository.RoomRepo;
 import org.spring.theguesthouse.service.BookingService;
 import org.spring.theguesthouse.service.RoomService;
 import org.spring.theguesthouse.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public DetailedBookingDTO bookingToDetailedDto(Booking booking) {
         return DetailedBookingDTO.builder().id(booking.getId())
-                .start_date(booking.getStartDate()).end_date(booking.getEndDate())
+                .startDate(booking.getStartDate()).endDate(booking.getEndDate())
                 .customer(new CustomerDto(booking.getCustomer().getId(), booking.getCustomer().getName()))
                 .rooms(booking.getRooms().stream().map(roomService::roomToDto).collect(Collectors.toList()))
                 .build();
