@@ -44,30 +44,19 @@ public class BookingServiceImpl implements BookingService {
     public DetailedBookingDTO bookingToDetailedDto(Booking booking) {
         Customer customer = booking.getCustomer();
 
-        //För att inte få dubbletter av customerDto:
         CustomerDto tempCustDto;
-        //TODO: In en if-sats: kolla om det finns en custDTO med Customerobjektets id (med typ CustomerService:getAllCustomers().stream().filter()...)
-        //TODO: Om det finns, tilldela tempCustDto den. Om den inte finns, tempCustDto = customerService.customerToDto(customer).
+        //TODO: tempCustDto= customerService.customerToDto(customer).
 
-        //För att inte få dubbletter av roomDTO:
         List<RoomDto> tempRooms = new ArrayList<>();
-        //For each room in Booking.rooms: if there is a matching roomDto: add to tempRooms. If there is not, create one and add to tempRooms.
         booking.getRooms().forEach(room ->{
-            RoomDto tempRoom =  roomService.getAllRooms().stream().filter(roomDto -> roomDto.getId().equals(room.getId())).findFirst().orElse(null);
-                if(tempRoom == null){
-                    tempRoom = roomService.roomToDto(room);
-                }
-                tempRooms.add(tempRoom);
+                tempRooms.add(roomService.roomToDto(room));
         });
 
         return DetailedBookingDTO.builder().id(booking.getId())
                 .start_date(booking.getStart_date()).end_date(booking.getEnd_date())
-                .rooms(booking.getRooms().forEach(room -> {
-                    roomService.roomToDto(room);
-                });
-                )
+                .rooms(tempRooms)
                 //TODO: När customerService har ovanstående metoder, kommentera in nedan.
-                //.customer(tempRooms)
+                //.customer(tempCustDto)
                 .build();
     }
 
