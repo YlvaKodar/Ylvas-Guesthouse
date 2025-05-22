@@ -1,17 +1,29 @@
 package org.spring.theguesthouse.service;
 
+import org.spring.theguesthouse.dto.CustomerDto;
+import org.spring.theguesthouse.dto.DeleteCustomerResponseDto;
 import org.spring.theguesthouse.dto.DetailedCustomerDto;
 import org.spring.theguesthouse.entity.Customer;
+
+import java.util.List;
 
 public interface CustomerService {
 
     Customer detailedCustomerDtoToCustomer(DetailedCustomerDto c);
 
-    String addCustomer (DetailedCustomerDto customer);
+    DetailedCustomerDto customerToDetailedCustomerDto(Customer c);
 
-    String deleteCustomerById(Long customerID);
+    CustomerDto customerToCustomerDto(Customer c);
 
-    String updateCustomer(DetailedCustomerDto customer);
+    DeleteCustomerResponseDto deleteCustomerById(Long id);
+
+    List<CustomerDto> getAllCustomers();
+
+    CustomerDto getCustomerById(Long id);
+
+    DetailedCustomerDto addCustomer (DetailedCustomerDto customer);
+
+    DetailedCustomerDto updateCustomer(DetailedCustomerDto customer);
 
 
 }
