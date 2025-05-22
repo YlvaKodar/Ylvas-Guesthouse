@@ -27,7 +27,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDTO bookingToDto(Booking booking) {
-        return BookingDTO.builder().id(booking.getId()).start_date(booking.getStart_date()).end_date(booking.getEnd_date()).build();
+        return BookingDTO.builder().id(booking.getId()).startDate(booking.getStartDate()).endDate(booking.getEndDate()).build();
     }
 
     @Override
@@ -37,7 +37,17 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking bookingDtoToBooking(DetailedBookingDTO dto) {
-        return null;
+        // Return null if the DTO is null
+        if (dto == null) {
+            return null;
+        }
+        // Create new Booking using builder pattern
+        return Booking.builder()
+                .id(dto.getId())
+                .startDate(dto.getStartDate())
+                .endDate(dto.getEndDate())
+                .build();
+
     }
 
     @Override

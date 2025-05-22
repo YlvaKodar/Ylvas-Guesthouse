@@ -13,6 +13,6 @@ import java.util.Date;
 @Builder
 public class BookingDTO {
     private Long id;
-    private Date start_date;
-    private Date end_date;
+    private Date startDate;
+    private Date endDate;
 }
