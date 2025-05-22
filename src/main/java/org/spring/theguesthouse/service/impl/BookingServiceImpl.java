@@ -1,6 +1,7 @@
 package org.spring.theguesthouse.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.spring.theguesthouse.dto.CustomerDto;
 import org.spring.theguesthouse.entity.Booking;
 import org.spring.theguesthouse.dto.BookingDTO;
 import org.spring.theguesthouse.dto.DetailedBookingDTO;
@@ -34,8 +35,7 @@ public class BookingServiceImpl implements BookingService {
     public DetailedBookingDTO bookingToDetailedDto(Booking booking) {
         return DetailedBookingDTO.builder().id(booking.getId())
                 .start_date(booking.getStart_date()).end_date(booking.getEnd_date())
-                //TODO: När customerService har  metoder, kommentera in nedan.
-                //.customer(new CustomerDto(booking.getCustomer().getId, booking.getCustomer().getName()))
+                .customer(new CustomerDto(booking.getCustomer().getId(), booking.getCustomer().getName()))
                 .rooms(booking.getRooms().stream().map(roomService::roomToDto).collect(Collectors.toList()))
                 .build();
     }
@@ -49,7 +49,7 @@ public class BookingServiceImpl implements BookingService {
     public List<BookingDTO> getAllBookingDtos() {
         return bookingRepo.findAll().stream().map(this::bookingToDto).toList();
     }
-
+    
     @Override
     public List<DetailedBookingDTO> getAllDetailedBookingDtos() {
         return bookingRepo.findAll().stream().map(this::bookingToDetailedDto).toList();
