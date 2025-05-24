@@ -3,8 +3,19 @@ package org.spring.theguesthouse;
 import org.spring.theguesthouse.entity.Booking;
 import org.spring.theguesthouse.entity.Customer;
 import org.spring.theguesthouse.entity.Room;
+import org.spring.theguesthouse.entity.Booking;
+import org.spring.theguesthouse.entity.Customer;
+import org.spring.theguesthouse.entity.Room;
+import org.spring.theguesthouse.repository.BookingRepo;
+import org.spring.theguesthouse.repository.CustomerRepo;
+import org.spring.theguesthouse.repository.RoomRepo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.boot.CommandLineRunner;
+
+import java.awt.print.Book;
+import java.time.LocalDate;
 
 import java.time.LocalDate;
 
