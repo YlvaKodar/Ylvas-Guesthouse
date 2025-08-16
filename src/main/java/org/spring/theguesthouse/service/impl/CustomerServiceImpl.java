@@ -64,8 +64,8 @@ public class CustomerServiceImpl implements CustomerService {
                     if (!customer.getBookings().isEmpty()) {
                         return new DeleteResponseDto(false, "Customer with id " + customerId  + " cannot be deleted as it has a booking");
                     }else {
-                    customerRepo.deleteById(customerId);
-                    return new DeleteResponseDto(true, "Customer with id " + customerId  + " has been deleted");}
+                        customerRepo.deleteById(customerId);
+                        return new DeleteResponseDto(true, "Customer with id " + customerId  + " has been deleted");}
                 })
                 .orElse(new DeleteResponseDto(false, "Customer with id " + customerId  + " does not exist"));
     }

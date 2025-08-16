@@ -10,14 +10,21 @@ import org.spring.theguesthouse.repository.CustomerRepo;
 import org.spring.theguesthouse.repository.RoomRepo;
 import org.spring.theguesthouse.service.BookingService;
 import org.spring.theguesthouse.service.RoomService;
+import org.spring.theguesthouse.service.CustomerService;
 import org.springframework.stereotype.Service;
+
+import java.awt.print.Book;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
 
+    private final RoomService roomService;
     private final BookingRepo bookingRepo;
     private final CustomerRepo customerRepo;
     private final RoomRepo roomRepo;
@@ -38,20 +45,10 @@ public class BookingServiceImpl implements BookingService {
                 .room(RoomDto.builder()
                         .id(booking.getRoom().getId())
                         .roomNumber(booking.getRoom().getRoomNumber())
+                        .maxGuests(booking.getRoom().getMaxGuests())
                         .build())
                 .build();
     }
-
-    /*
-
-    @Override
-    public DetailedBookingDTO bookingToDetailedDto(Booking booking) {
-        return DetailedBookingDTO.builder().id(booking.getId())
-                .startDate(booking.getStartDate()).endDate(booking.getEndDate())
-                .customer(new CustomerDto(booking.getCustomer().getId(), booking.getCustomer().getName()))
-                .room(new RoomDto(booking.getRoom().getId(), booking.getRoom().getRoomNumber()))
-                .build();
-    }*/
 
     @Override
     public Booking detailedBookingDtoToBooking(DetailedBookingDTO dto) {
@@ -92,51 +89,19 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public DetailedBookingDTO updateBooking(DetailedBookingDTO booking) {
-        // Validate input
-        if (booking.getId() == null) {
-            throw new RuntimeException("Booking ID is required for update");
+        Booking existingBooking = bookingRepo.findById(booking.getId()).orElseThrow(() -> new RuntimeException("Booking with id" + booking.getId() + " not found"));
+
+        if(!(checkDates(booking.getStartDate()) || checkDateOrder(booking.getStartDate(), booking.getEndDate()))) {
+            throw new RuntimeException("Booking dates are wrong.");
         }
 
-        // Validate dates
-        if (booking.getStartDate().isAfter(booking.getEndDate())) {
-            throw new RuntimeException("Start date must be before end date");
-        }
-
-        // Find the existing booking or throw exception if not found
-        Booking existingBooking = bookingRepo.findById(booking.getId())
-                .orElseThrow(() -> new RuntimeException("Booking with id " + booking.getId() + " not found"));
-
-        // Determine which room to check availability for
-        Long roomIdToCheck = (booking.getRoom() != null) ?
-                booking.getRoom().getId() : existingBooking.getRoom().getId();
-
-
-        // Check room availability using RoomService (excluding current booking)
-        if (!roomService.isRoomAvailable(roomIdToCheck, booking.getStartDate(),
-                booking.getEndDate(), booking.getId())) {
-            Room room = roomRepo.findById(roomIdToCheck)
-                    .orElseThrow(() -> new RuntimeException("Room with id " + roomIdToCheck + " not found"));
-            throw new RuntimeException("Room " + room.getRoomNumber() +
-                    " is not available for the selected dates");
-        }
-
-        // Update dates (always allowed)
         existingBooking.setStartDate(booking.getStartDate());
         existingBooking.setEndDate(booking.getEndDate());
+        existingBooking.setNumberOfGuests(booking.getNumberOfGuests());
+        existingBooking.setRoom(roomRepo.findById(booking.getRoom().getId()).orElseThrow(() -> new RuntimeException("Room reference is missing")));
 
-        // Update room only if provided and different
-        if (booking.getRoom() != null &&
-                !existingBooking.getRoom().getId().equals(booking.getRoom().getId())) {
-            Room newRoom = roomRepo.findById(booking.getRoom().getId())
-                    .orElseThrow(() -> new RuntimeException("Room with id " + booking.getRoom().getId() + " not found"));
-            existingBooking.setRoom(newRoom);
-        }
-
-        // Save the updated booking
-        Booking updatedBooking = bookingRepo.save(existingBooking);
-
-        // Convert back to DTO and return
-        return bookingToDetailedDto(updatedBooking);
+        bookingRepo.save(existingBooking);
+        return booking;
     }
 
     @Override
@@ -148,4 +113,24 @@ public class BookingServiceImpl implements BookingService {
     public List<DetailedBookingDTO> getAllDetailedBookingDtos() {
         return bookingRepo.findAll().stream().map(this::bookingToDetailedDto).toList();
     }
+
+    @Override
+    public DeleteResponseDto deleteBooking(Long bookingId) {
+        return bookingRepo.findById(bookingId).
+                map(booking -> { bookingRepo.deleteById(bookingId);
+                    return new DeleteResponseDto(true, "Booking has been deleted.");})
+                .orElse(new DeleteResponseDto(false, "Booking does not exists"));
+
+    }
+
+    @Override
+    public Boolean checkDateOrder(LocalDate start, LocalDate end) {
+        return end.isAfter(start);
+    }
+
+    @Override
+    public Boolean checkDates(LocalDate startDate) {
+        return startDate.isAfter(LocalDate.now());
+    }
+
 }

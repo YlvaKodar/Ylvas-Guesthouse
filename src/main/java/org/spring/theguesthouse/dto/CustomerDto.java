@@ -1,5 +1,6 @@
 package org.spring.theguesthouse.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
