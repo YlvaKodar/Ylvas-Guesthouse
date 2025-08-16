@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Bookings</title>
+
+  <style>
+    table {
+      border-collapse: collapse;
+      width: auto;
+    }
+    th, td {
+      text-align: left;
+      padding: 5px;
+      width: 100px; /* Fast bredd för alla kolumner */
+    }
+    th:first-child, td:first-child {
+      width: 50px; /* ID-kolumn lite smalare */
+    }
+  </style>
+
+</head>
+<body>
+<h2 th:text="${bookingTitle}"></h2>
+<table>
+  <tr><th th:text="${id}"></th>
+    <th th:text="${startDate}"></th>
+    <th th:text="${endDate}"></th>
+  <tr th:each="booking : ${allBookings}">
+    <td th:text="${booking.id}">1</td>
+    <td th:text="${booking.startDate}">2085-10-02</td>
+    <td th:text="${booking.endDate}">2089-04-09</td>
+    <td><a th:href="@{/bookings/details/{id}(id=${booking.id})}">Details</a>|
+    <a th:href="@{/bookings/deleteById/{id}(id=${booking.id})}">Delete</a></td>
+  </tr>
+
+  <!-- Placeholder (if empty list) -->
+  <tr th:if="${#lists.isEmpty(allBookings)}">
+    <td>1337</td>
+    <td>2085-10-12</td>
+    <td>2089-04-09</td>
+    <td>Details</td>
+    <td>Delete</td>
+
+  </tr>
+</table>
+<br>
+<br>
+<td><a th:href="@{/startpage}">Startpage</a></td>
+</body>
+</html>

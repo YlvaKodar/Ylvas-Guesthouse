@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Customer Details</title>
+</head>
+<body>
+<h2>Customer Details</h2>
+<style>
+  table {
+    border-collapse: collapse;
+    width: auto;
+  }
+  th, td {
+    text-align: left;
+    padding: 5px;
+    width: 100px;
+  }
+  th:last-child, td:last-child {
+    width: 400px;
+  }
+  .error {
+    color: red;
+    font-size: 12px;
+    display: block;
+    margin-top: 2px;
+  }
+
+</style>
+<table>
+  <tr>
+    <th>ID:</th>
+    <td th:text="${customer.id}"></td>
+  </tr>
+  <tr>
+    <th>Name:</th>
+    <td th:text="${customer.name}"></td>
+  </tr>
+  <tr>
+    <th>Email:</th>
+    <td th:text="${customer.email}"></td>
+  </tr>
+</table>
+
+<h3>Bookings</h3>
+<table th:if="${customer.bookings != null and !customer.bookings.isEmpty()}">
+  <tr>
+    <th>Booking ID</th>
+    <th>Details</th>
+  </tr>
+  <tr th:each="booking : ${customer.bookings}">
+    <td th:text="${booking.id}">1</td>
+    <td th:text="${booking}">Booking details</td>
+  </tr>
+</table>
+
+<p th:if="${customer.bookings == null or customer.bookings.isEmpty()}">
+  No bookings found for this customer.
+</p>
+
+<h3>Update Customer</h3>
+
+<form th:action="@{/customers/update/{id}(id=${customer.id})}" method="post">
+  <label>Name:</label><br>
+  <input type="text" name="name" th:value="${customer.name}" required><br><br>
+  <span th:if="${nameError}" th:text="${nameError}" class="error"></span>
+
+  <label>Email:</label><br>
+  <input type="email" name="email" th:value="${customer.email}" required><br><br>
+  <span th:if="${emailError}" th:text="${emailError}" class="error"></span>
+
+  <button type="submit">Update</button>
+</form>
+
+<br>
+<a href="/customers/all">Back to Customer List</a>
+
+</body>
+</html>

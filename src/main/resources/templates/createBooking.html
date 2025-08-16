@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Create Booking</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: auto;
+    }
+    th, td {
+      text-align: left;
+      padding: 5px;
+      width: 100px; /* Fast bredd för alla kolumner */
+    }
+    th:first-child, td:first-child {
+      width: 50px; /* ID-kolumn lite smalare */
+    }
+    .error {
+      color: red;
+      font-size: 12px;
+      display: block;
+      margin-top: 2px;
+    }
+
+  </style>
+</head>
+<body>
+<h3>Create Booking</h3>
+<span th:if="${error}" th:text="${error}" class="error"></span>
+<h4>Select Dates</h4>
+<form th:action="@{/bookings/create/{id}/room-availability(id=${customer.id})}" method="post">
+  <div th:include="bookingForm"></div>
+  <button type="submit">Create Booking</button>
+</form>
+<div th:if="${availableRooms != null}">
+  <h4>Available Rooms (<span th:text="${#lists.size(availableRooms)}"></span>)</h4>
+<h4>Available Rooms</h4>
+  <form th:action="@{/bookings/create/{id}(id=${customer.id})}" method="post">
+
+    <input type="hidden" name="startDate" th:value="${startDate}">
+    <input type="hidden" name="endDate" th:value="${endDate}">
+    <input type="hidden" name="numberOfGuests" th:value="${numberOfGuests}">
+
+    <table border="1">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Room Number</th>
+        <th>Max Guests</th>
+        <th>Select</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="room : ${availableRooms}">
+        <td th:text="${room.id}"></td>
+        <td th:text="${room.roomNumber}"></td>
+        <td th:text="${room.maxGuests}"></td>
+        <td><input type="radio" name="roomId" th:value="${room.id}" required></td>
+      </tr>
+      </tbody>
+    </table>
+
+    <br>
+    <button type="submit">Create Booking</button>
+  </form>
+</div>
+<br>
+<a href="/customers/all">Back to Customer List</a>
+</body>
+</html>

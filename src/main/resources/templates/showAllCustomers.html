@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customers</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: auto;
+        }
+        th, td {
+            text-align: left;
+            padding: 5px;
+            width: 100px;
+        }
+        th:first-child, td:first-child {
+            width: 50px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+            display: block;
+            margin-top: 2px;
+        }
+        .confirmation {
+            color: green;
+            font-size: 12px;
+            display: block;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+<h2 th:text="${customerTitle}"></h2>
+
+<table>
+    <span th:if="${deleteError}" th:text="${deleteError}" class="error"></span>
+    <span th:if="${deleteConfirmation}" th:text="${deleteConfirmation}" class="confirmation"></span>
+    <tr><th th:text="${id}"></th>
+        <th th:text="${name}"></th>
+    <tr th:each="customer : ${allCustomers}">
+        <td th:text="${customer.id}">1</td>
+        <td th:text="${customer.name}">John</td>
+        <td><a th:href="@{/customers/details/{id}(id=${customer.id})}">Details</a>
+        <td><a th:href="@{/bookings/create/{id}(id=${customer.id})}">Add Booking</a>
+      <td><a th:href="@{/customers/deleteById/{id}(id=${customer.id})}">Delete</a></td>
+ </tr>
+</table>
+
+<h3>Add New Customer</h3>
+
+<form action="/customers/create" method="post">
+    <label>Name:</label><br>
+    <input type="text" name="name" th:value="${inputName}" required minlength="5">
+    <span th:if="${nameError}" th:text="${nameError}" class="error"></span>
+    <br><br>
+    <label>Email:</label><br>
+    <input type="email" name="email" th:value="${inputEmail}" required>
+    <span th:if="${emailError}" th:text="${emailError}" class="error"></span>
+    <br><br>
+    <button type="submit">Add Customer</button>
+</form>
+<br>
+<br>
+<td><a th:href="@{/startpage}">Startpage</a></td>
+</body>
+</html>
