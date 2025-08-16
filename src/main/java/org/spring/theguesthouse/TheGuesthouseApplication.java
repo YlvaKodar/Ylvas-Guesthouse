@@ -26,9 +26,21 @@ public class TheGuesthouseApplication {
         SpringApplication.run(TheGuesthouseApplication.class, args);
     }
 
-     @Bean
+    @Bean
     public CommandLineRunner commandLineRunner(BookingRepo bookingRepo, CustomerRepo customerRepo, RoomRepo roomRepo) {
         return args -> {
+
+            //To get legit dates in test data:
+            LocalDate oneDayStart = LocalDate.now();
+            LocalDate oneDayEnd = oneDayStart.plusDays(1);
+
+            LocalDate threeDaysStart = LocalDate.now();
+            LocalDate threeDaysEnd = threeDaysStart.plusDays(3);
+
+            LocalDate oneWeekStart = LocalDate.now();
+            LocalDate oneWeekEnd = oneWeekStart.plusDays(7);
+
+
 
             Room r1 = Room.builder().roomNumber(101).maxGuests(1).build();
             Room r2 = Room.builder().roomNumber(102).maxGuests(2).build();
@@ -65,20 +77,20 @@ public class TheGuesthouseApplication {
             customerRepo.save(c5);
 
             Booking b1 = Booking.builder().customer(c1)
-                    .startDate(LocalDate.of(2025, 10, 15))
-                    .endDate(LocalDate.of(2025, 10, 18)).numberOfGuests(1).room(r1).build();
+                    .startDate(oneDayStart.plusMonths(1))
+                    .endDate(oneDayEnd.plusMonths(1)).numberOfGuests(1).room(r1).build();
 
             Booking b2 = Booking.builder().customer(c1)
-                    .startDate(LocalDate.of(2025, 10, 2))
-                    .endDate(LocalDate.of(2025, 10, 3)).numberOfGuests(2).room(r2).build();
+                    .startDate(threeDaysStart.plusDays(7))
+                    .endDate(threeDaysEnd.plusDays(7)).numberOfGuests(2).room(r2).build();
 
             Booking b3 = Booking.builder().customer(c3)
-                    .startDate(LocalDate.of(2025, 8, 15))
-                    .endDate(LocalDate.of(2025, 9, 1)).numberOfGuests(4).room(r5).build();
+                    .startDate(oneWeekStart.plusWeeks(2))
+                    .endDate(oneWeekEnd.plusWeeks(2)).numberOfGuests(4).room(r5).build();
 
             Booking b4 = Booking.builder().customer(c2)
-                    .startDate(LocalDate.of(2025, 8, 16))
-                    .endDate(LocalDate.of(2025, 8, 18)).numberOfGuests(2).room(r8).build();
+                    .startDate(oneWeekStart.plusWeeks(3))
+                    .endDate(oneWeekEnd.plusWeeks(3)).numberOfGuests(2).room(r8).build();
 
 
             bookingRepo.save(b1);
